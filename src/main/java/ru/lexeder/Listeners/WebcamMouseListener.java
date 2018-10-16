@@ -1,7 +1,7 @@
 package ru.lexeder.Listeners;
 
 import com.github.sarxos.webcam.Webcam;
-import ru.lexeder.App;
+import ru.lexeder.Printers.DefaultPrint;
 
 import javax.imageio.ImageIO;
 import java.awt.event.MouseEvent;
@@ -28,7 +28,10 @@ public class WebcamMouseListener implements MouseListener {
         BufferedImage image = webcam.getImage();
         try {
             Date date = new Date();
-            ImageIO.write(image, "PNG", new File(System.getProperty("user.dir") + "/shots/","photo " + dateFormat.format(date) + ".png"));
+            String filePath = System.getProperty("user.dir") + "/shots/photo " + dateFormat.format(date) + ".png";
+            ImageIO.write(image, "PNG", new File(System.getProperty("user.dir") + "/shots/photo " + dateFormat.format(date) + ".png"));
+            DefaultPrint printer = new DefaultPrint();
+            printer.printImage(filePath);
         } catch (IOException e1) {
             e1.printStackTrace();
         }
