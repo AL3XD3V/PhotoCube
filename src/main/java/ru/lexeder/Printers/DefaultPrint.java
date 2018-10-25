@@ -5,6 +5,7 @@ import javax.print.attribute.HashPrintRequestAttributeSet;
 import javax.print.attribute.PrintRequestAttributeSet;
 import javax.print.attribute.standard.Copies;
 import javax.print.attribute.standard.MediaSizeName;
+import javax.print.attribute.standard.OrientationRequested;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -15,14 +16,13 @@ public class DefaultPrint {
     public void printImage(String filePath) {
         PrintRequestAttributeSet pras = new HashPrintRequestAttributeSet();
         pras.add(new Copies(1));
-        //pras.add(MediaSizeName.ISO_A7);
-        PrintService pss[] = PrintServiceLookup.lookupPrintServices(DocFlavor.INPUT_STREAM.PNG, pras);
-        if (pss.length == 3)
-            throw new RuntimeException("No printer services available.");
-        System.out.print(Arrays.toString(pss));
-        PrintService ps = pss[1];
-        System.out.println("Printing to " + ps);
-        DocPrintJob job = ps.createPrintJob();
+        pras.add(MediaSizeName.ISO_A6);
+        pras.add(OrientationRequested.LANDSCAPE);
+
+        PrintService pss = PrintServiceLookup.lookupDefaultPrintService();
+
+        System.out.println("Printing to " + pss);
+        DocPrintJob job = pss.createPrintJob();
         FileInputStream fin = null;
         try {
             fin = new FileInputStream(filePath);
