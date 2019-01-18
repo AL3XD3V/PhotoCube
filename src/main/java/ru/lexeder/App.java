@@ -7,6 +7,8 @@ import com.github.sarxos.webcam.WebcamPanel;
 import com.github.sarxos.webcam.WebcamResolution;
 import ru.lexeder.Listeners.WebcamMouseListener;
 
+import java.awt.*;
+
 
 public class App {
 
@@ -21,12 +23,20 @@ public class App {
         panel.setImageSizeDisplayed(true);
         panel.setMirrored(true);
 
-        JFrame window = new JFrame("Test webcam panel");
+        JFrame window = new JFrame("PhotoCube");
         window.addMouseListener(new WebcamMouseListener(webcam));
         window.add(panel);
         window.setResizable(false);
         window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         window.pack();
         window.setVisible(true);
+
+        try {
+            Robot robot = new Robot();
+            robot.mouseMove(250, 250);
+        } catch (AWTException e) {
+            e.printStackTrace();
+        }
     }
+
 }
